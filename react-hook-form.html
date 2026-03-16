@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<title>React Hook Form</title>
+<link rel="stylesheet" href="css/style.css">
+<script defer src="js/course.js"></script>
+</head>
+
+<body>
+
+<header>
+<h1>React Hook Form</h1>
+<a href="index.html">← Retour au menu</a>
+</header>
+
+<main class="container">
+
+<p>
+<strong>React Hook Form</strong> est une bibliothèque qui simplifie la gestion des formulaires dans React.
+Elle permet de récupérer les valeurs des champs, gérer la validation et contrôler l'état du formulaire.
+</p>
+
+<p>
+Les éléments principaux sont :
+</p>
+
+<ul>
+<li><strong>useForm</strong> : initialise le formulaire</li>
+<li><strong>register</strong> : connecte un input au formulaire</li>
+<li><strong>handleSubmit</strong> : récupère les données lors de l'envoi</li>
+<li><strong>formState</strong> : contient les erreurs et l'état du formulaire</li>
+</ul>
+
+---
+
+<div class="exercise">
+
+<h2>Exercice 1 — Initialiser un formulaire</h2>
+
+<h3>Objectif</h3>
+Initialiser React Hook Form avec <strong>useForm</strong>.
+
+<h3>Code exemple</h3>
+
+<pre class="code-example">
+
+import { useForm } from "react-hook-form"
+
+function RegisterForm(){
+
+  const { register, handleSubmit } = useForm()
+
+  function onSubmit(data){
+    console.log(data)
+  }
+
+  return (
+    &lt;form onSubmit={handleSubmit(onSubmit)}&gt;
+      &lt;input {...register("email")} /&gt;
+      &lt;button&gt;Envoyer&lt;/button&gt;
+    &lt;/form&gt;
+  )
+
+}
+
+</pre>
+
+<h3>Explication</h3>
+
+<p>
+1. <strong>useForm()</strong> initialise le formulaire.<br>
+2. <strong>register</strong> connecte un champ au formulaire.<br>
+3. <strong>handleSubmit</strong> récupère les données au submit.<br>
+</p>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+
+<pre class="solution">
+const { register, handleSubmit } = useForm()
+</pre>
+
+</div>
+
+---
+
+<div class="exercise">
+
+<h2>Exercice 2 — Utiliser register</h2>
+
+<h3>Objectif</h3>
+Connecter un input au formulaire.
+
+<pre class="code-example">
+
+function RegisterForm(){
+
+ const { register } = useForm()
+
+ return (
+  &lt;form&gt;
+
+   &lt;input
+    placeholder="Email"
+    {...register("email")}
+   /&gt;
+
+  &lt;/form&gt;
+ )
+
+}
+
+</pre>
+
+<h3>Explication</h3>
+
+<p>
+register permet à React Hook Form de suivre la valeur du champ.
+</p>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+
+<pre class="solution">
+{...register("email")}
+</pre>
+
+</div>
+
+---
+
+<div class="exercise">
+
+<h2>Exercice 3 — Récupérer les données</h2>
+
+<h3>Objectif</h3>
+Afficher les données envoyées.
+
+<pre class="code-example">
+
+function LoginForm(){
+
+ const { register, handleSubmit } = useForm()
+
+ function onSubmit(data){
+
+  console.log(data)
+
+ }
+
+ return(
+
+  &lt;form onSubmit={handleSubmit(onSubmit)}&gt;
+
+   &lt;input {...register("email")} /&gt;
+
+   &lt;input {...register("password")} /&gt;
+
+   &lt;button&gt;Login&lt;/button&gt;
+
+  &lt;/form&gt;
+
+ )
+
+}
+
+</pre>
+
+<h3>Explication</h3>
+
+<p>
+data contient toutes les valeurs du formulaire.
+</p>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+
+<pre class="solution">
+function onSubmit(data){
+ console.log(data)
+}
+</pre>
+
+</div>
+
+---
+
+<div class="exercise">
+
+<h2>Exercice 4 — Validation simple</h2>
+
+<h3>Objectif</h3>
+Ajouter une validation obligatoire.
+
+<pre class="code-example">
+
+&lt;input
+ {...register("email", { required: true })}
+/&gt;
+
+</pre>
+
+<h3>Explication</h3>
+
+<p>
+required vérifie que le champ est rempli.
+</p>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+
+<pre class="solution">
+{ required: true }
+</pre>
+
+</div>
+
+---
+
+<div class="exercise">
+
+<h2>Exercice 5 — formState</h2>
+
+<h3>Objectif</h3>
+Afficher les erreurs.
+
+<pre class="code-example">
+
+const {
+ register,
+ handleSubmit,
+ formState: { errors }
+} = useForm()
+
+{errors.email && &lt;p&gt;Email obligatoire&lt;/p&gt;}
+
+</pre>
+
+<h3>Explication</h3>
+
+<p>
+formState contient les erreurs du formulaire.
+</p>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+
+<pre class="solution">
+formState: { errors }
+</pre>
+
+</div>
+
+---
+
+<div class="exercise">
+
+<h2>Exercice 6 — Validation email</h2>
+
+<pre class="code-example">
+
+&lt;input
+ {...register("email", {
+  required: true,
+  pattern: /^[^@]+@[^@]+\.[^@]+$/
+ })}
+/&gt;
+
+</pre>
+
+</div>
+
+---
+
+<div class="exercise">
+
+<h2>Exercice 7 — Mot de passe minimum</h2>
+
+<pre class="code-example">
+
+&lt;input
+ type="password"
+ {...register("password", {
+  minLength: 6
+ })}
+/&gt;
+
+</pre>
+
+</div>
+
+---
+
+<div class="exercise">
+
+<h2>Exercice 8 — Formulaire Register fictif</h2>
+
+<pre class="code-example">
+
+function Register(){
+
+ const { register, handleSubmit } = useForm()
+
+ function onSubmit(data){
+
+  console.log("New user:", data)
+
+ }
+
+ return(
+
+  &lt;form onSubmit={handleSubmit(onSubmit)}&gt;
+
+   &lt;input {...register("name")} placeholder="Nom" /&gt;
+
+   &lt;input {...register("email")} placeholder="Email" /&gt;
+
+   &lt;input type="password" {...register("password")} /&gt;
+
+   &lt;button&gt;Créer compte&lt;/button&gt;
+
+  &lt;/form&gt;
+
+ )
+
+}
+
+</pre>
+
+</div>
+
+---
+
+<div class="exercise">
+
+<h2>Exercice 9 — Login fictif</h2>
+
+<pre class="code-example">
+
+function Login(){
+
+ const { register, handleSubmit } = useForm()
+
+ function onSubmit(data){
+
+  console.log("Login:", data)
+
+ }
+
+ return(
+
+  &lt;form onSubmit={handleSubmit(onSubmit)}&gt;
+
+   &lt;input {...register("email")} /&gt;
+
+   &lt;input type="password" {...register("password")} /&gt;
+
+   &lt;button&gt;Login&lt;/button&gt;
+
+  &lt;/form&gt;
+
+ )
+
+}
+
+</pre>
+
+</div>
+
+---
+
+<div class="exercise">
+
+<h2>Exercice 10 — Mini formulaire complet</h2>
+
+<h3>Objectif</h3>
+Créer un formulaire avec validation.
+
+<pre class="code-example">
+
+function Contact(){
+
+ const {
+  register,
+  handleSubmit,
+  formState: { errors }
+ } = useForm()
+
+ function onSubmit(data){
+  console.log(data)
+ }
+
+ return(
+
+  &lt;form onSubmit={handleSubmit(onSubmit)}&gt;
+
+   &lt;input {...register("name",{required:true})} /&gt;
+
+   {errors.name && &lt;p&gt;Nom requis&lt;/p&gt;}
+
+   &lt;input {...register("email",{required:true})} /&gt;
+
+   {errors.email && &lt;p&gt;Email requis&lt;/p&gt;}
+
+   &lt;button&gt;Envoyer&lt;/button&gt;
+
+  &lt;/form&gt;
+
+ )
+
+}
+
+</pre>
+
+</div>
+
+</main>
+
+</body>
+</html>
