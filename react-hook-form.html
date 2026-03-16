@@ -2,160 +2,223 @@
 <html lang="fr">
 
 <head>
+
 <meta charset="UTF-8">
+
 <title>React Hook Form</title>
+
 <link rel="stylesheet" href="css/style.css">
+
 <script defer src="js/course.js"></script>
+
 </head>
+
 
 <body>
 
 <header>
+
 <h1>React Hook Form</h1>
+
 <a href="index.html">← Retour au menu</a>
+
 </header>
+
 
 <main class="container">
 
-<p>
-<strong>React Hook Form</strong> est une bibliothèque qui simplifie la gestion des formulaires dans React.
-Elle permet de récupérer les valeurs des champs, gérer la validation et contrôler l'état du formulaire.
-</p>
 
 <p>
-Les éléments principaux sont :
+
+<strong>React Hook Form</strong> est une bibliothèque qui simplifie la gestion des formulaires dans React.
+
+Elle permet de récupérer les valeurs, valider les champs et gérer l'état du formulaire facilement.
+
 </p>
+
+
+<p>Les éléments principaux sont :</p>
 
 <ul>
+
 <li><strong>useForm</strong> : initialise le formulaire</li>
-<li><strong>register</strong> : connecte un input au formulaire</li>
+
+<li><strong>register</strong> : connecte un champ au formulaire</li>
+
 <li><strong>handleSubmit</strong> : récupère les données lors de l'envoi</li>
-<li><strong>formState</strong> : contient les erreurs et l'état du formulaire</li>
+
+<li><strong>formState</strong> : contient les erreurs</li>
+
 </ul>
 
----
+
+
+<!-- EXERCICE 1 -->
 
 <div class="exercise">
 
-<h2>Exercice 1 — Initialiser un formulaire</h2>
+<h2>Exercice 1 — Initialiser useForm</h2>
 
-<h3>Objectif</h3>
-Initialiser React Hook Form avec <strong>useForm</strong>.
+<p class="explication">
 
-<h3>Code exemple</h3>
+Découvrir comment initialiser React Hook Form.
+
+</p>
+
+<h3>Code Exemple</h3>
 
 <pre class="code-example">
 
+// Import du hook useForm depuis la bibliothèque react-hook-form
 import { useForm } from "react-hook-form"
 
-function RegisterForm(){
+// Création du composant React
+function FormExample(){
 
+  // Initialisation du formulaire
+  // register : connecte les champs
+  // handleSubmit : gère l'envoi du formulaire
   const { register, handleSubmit } = useForm()
 
+  // Fonction appelée lors de l'envoi
   function onSubmit(data){
+
+    // data contient toutes les valeurs du formulaire
     console.log(data)
+
   }
 
   return (
+
+    // Formulaire HTML
+    // handleSubmit capture les données avant l'envoi
     &lt;form onSubmit={handleSubmit(onSubmit)}&gt;
+
+      // Champ email connecté au formulaire
       &lt;input {...register("email")} /&gt;
+
+      // Bouton d'envoi
       &lt;button&gt;Envoyer&lt;/button&gt;
+
     &lt;/form&gt;
+
   )
 
 }
 
 </pre>
 
-<h3>Explication</h3>
-
-<p>
-1. <strong>useForm()</strong> initialise le formulaire.<br>
-2. <strong>register</strong> connecte un champ au formulaire.<br>
-3. <strong>handleSubmit</strong> récupère les données au submit.<br>
-</p>
-
 <button onclick="toggleSolution(this)">Voir la solution</button>
 
 <pre class="solution">
+
 const { register, handleSubmit } = useForm()
+
 </pre>
 
 </div>
 
----
+
+
+<!-- EXERCICE 2 -->
 
 <div class="exercise">
 
-<h2>Exercice 2 — Utiliser register</h2>
+<h2>Exercice 2 — register</h2>
 
-<h3>Objectif</h3>
+<p class="explication">
+
 Connecter un input au formulaire.
+
+</p>
 
 <pre class="code-example">
 
-function RegisterForm(){
+// Import useForm
+import { useForm } from "react-hook-form"
 
+function FormExample(){
+
+ // On récupère register
  const { register } = useForm()
 
- return (
+ return(
+
   &lt;form&gt;
 
+   // Input email
+   // register permet à React Hook Form de suivre la valeur
    &lt;input
+
     placeholder="Email"
+
     {...register("email")}
+
    /&gt;
 
   &lt;/form&gt;
+
  )
 
 }
 
 </pre>
 
-<h3>Explication</h3>
-
-<p>
-register permet à React Hook Form de suivre la valeur du champ.
-</p>
-
 <button onclick="toggleSolution(this)">Voir la solution</button>
 
 <pre class="solution">
+
 {...register("email")}
+
 </pre>
 
 </div>
 
----
+
+
+<!-- EXERCICE 3 -->
 
 <div class="exercise">
 
-<h2>Exercice 3 — Récupérer les données</h2>
+<h2>Exercice 3 — handleSubmit</h2>
 
-<h3>Objectif</h3>
-Afficher les données envoyées.
+<p class="explication">
+
+Récupérer les données lors de l'envoi du formulaire.
+
+</p>
 
 <pre class="code-example">
 
+// Import du hook
+import { useForm } from "react-hook-form"
+
 function LoginForm(){
 
+ // register connecte les inputs
+ // handleSubmit gère l'envoi
  const { register, handleSubmit } = useForm()
 
+ // Fonction appelée au submit
  function onSubmit(data){
 
+  // data contient toutes les valeurs
   console.log(data)
 
  }
 
  return(
 
+  // Formulaire
   &lt;form onSubmit={handleSubmit(onSubmit)}&gt;
 
+   // Champ email
    &lt;input {...register("email")} /&gt;
 
+   // Champ mot de passe
    &lt;input {...register("password")} /&gt;
 
+   // Bouton login
    &lt;button&gt;Login&lt;/button&gt;
 
   &lt;/form&gt;
@@ -166,133 +229,159 @@ function LoginForm(){
 
 </pre>
 
-<h3>Explication</h3>
-
-<p>
-data contient toutes les valeurs du formulaire.
-</p>
-
-<button onclick="toggleSolution(this)">Voir la solution</button>
-
-<pre class="solution">
-function onSubmit(data){
- console.log(data)
-}
-</pre>
-
 </div>
 
----
+
+
+<!-- EXERCICE 4 -->
 
 <div class="exercise">
 
-<h2>Exercice 4 — Validation simple</h2>
+<h2>Exercice 4 — Validation required</h2>
 
-<h3>Objectif</h3>
-Ajouter une validation obligatoire.
+<p class="explication">
+
+Ajouter un champ obligatoire.
+
+</p>
 
 <pre class="code-example">
 
+// Input email avec validation
 &lt;input
- {...register("email", { required: true })}
+
+ // register connecte le champ
+ {...register("email", {
+
+  // required signifie obligatoire
+  required: true
+
+ })}
+
 /&gt;
 
 </pre>
 
-<h3>Explication</h3>
-
-<p>
-required vérifie que le champ est rempli.
-</p>
-
-<button onclick="toggleSolution(this)">Voir la solution</button>
-
-<pre class="solution">
-{ required: true }
-</pre>
-
 </div>
 
----
+
+
+<!-- EXERCICE 5 -->
 
 <div class="exercise">
 
-<h2>Exercice 5 — formState</h2>
+<h2>Exercice 5 — formState errors</h2>
 
-<h3>Objectif</h3>
-Afficher les erreurs.
+<p class="explication">
+
+Afficher les erreurs du formulaire.
+
+</p>
 
 <pre class="code-example">
 
+// On récupère les erreurs depuis formState
 const {
+
  register,
+
  handleSubmit,
+
  formState: { errors }
+
 } = useForm()
 
+// Si une erreur existe sur email
+// alors on affiche un message
 {errors.email && &lt;p&gt;Email obligatoire&lt;/p&gt;}
 
 </pre>
 
-<h3>Explication</h3>
-
-<p>
-formState contient les erreurs du formulaire.
-</p>
-
-<button onclick="toggleSolution(this)">Voir la solution</button>
-
-<pre class="solution">
-formState: { errors }
-</pre>
-
 </div>
 
----
+
+
+<!-- EXERCICE 6 -->
 
 <div class="exercise">
 
 <h2>Exercice 6 — Validation email</h2>
 
+<p class="explication">
+
+Ajouter une validation avec expression régulière.
+
+</p>
+
 <pre class="code-example">
 
 &lt;input
+
  {...register("email", {
+
   required: true,
+
+  // Regex simple pour email
   pattern: /^[^@]+@[^@]+\.[^@]+$/
+
  })}
+
 /&gt;
 
 </pre>
 
 </div>
 
----
+
+
+<!-- EXERCICE 7 -->
 
 <div class="exercise">
 
 <h2>Exercice 7 — Mot de passe minimum</h2>
 
+<p class="explication">
+
+Limiter la taille du mot de passe.
+
+</p>
+
 <pre class="code-example">
 
 &lt;input
+
  type="password"
+
  {...register("password", {
+
+  // longueur minimum
   minLength: 6
+
  })}
+
 /&gt;
 
 </pre>
 
 </div>
 
----
+
+
+<!-- EXERCICE 8 -->
 
 <div class="exercise">
 
-<h2>Exercice 8 — Formulaire Register fictif</h2>
+<h2>Exercice 8 — Register fictif</h2>
+
+<p class="explication">
+
+Créer un formulaire d'inscription simple.
+
+</p>
 
 <pre class="code-example">
+
+import { useForm } from "react-hook-form"
 
 function Register(){
 
@@ -300,7 +389,8 @@ function Register(){
 
  function onSubmit(data){
 
-  console.log("New user:", data)
+  // simulation création utilisateur
+  console.log("Utilisateur créé :", data)
 
  }
 
@@ -308,12 +398,16 @@ function Register(){
 
   &lt;form onSubmit={handleSubmit(onSubmit)}&gt;
 
+   // Nom utilisateur
    &lt;input {...register("name")} placeholder="Nom" /&gt;
 
+   // Email
    &lt;input {...register("email")} placeholder="Email" /&gt;
 
+   // Mot de passe
    &lt;input type="password" {...register("password")} /&gt;
 
+   // Bouton création compte
    &lt;button&gt;Créer compte&lt;/button&gt;
 
   &lt;/form&gt;
@@ -326,13 +420,23 @@ function Register(){
 
 </div>
 
----
+
+
+<!-- EXERCICE 9 -->
 
 <div class="exercise">
 
 <h2>Exercice 9 — Login fictif</h2>
 
+<p class="explication">
+
+Créer un formulaire de connexion.
+
+</p>
+
 <pre class="code-example">
+
+import { useForm } from "react-hook-form"
 
 function Login(){
 
@@ -340,7 +444,8 @@ function Login(){
 
  function onSubmit(data){
 
-  console.log("Login:", data)
+  // simulation login
+  console.log("Connexion utilisateur :", data)
 
  }
 
@@ -348,10 +453,13 @@ function Login(){
 
   &lt;form onSubmit={handleSubmit(onSubmit)}&gt;
 
+   // Email
    &lt;input {...register("email")} /&gt;
 
+   // Mot de passe
    &lt;input type="password" {...register("password")} /&gt;
 
+   // Bouton login
    &lt;button&gt;Login&lt;/button&gt;
 
   &lt;/form&gt;
@@ -364,41 +472,59 @@ function Login(){
 
 </div>
 
----
+
+
+<!-- EXERCICE 10 -->
 
 <div class="exercise">
 
-<h2>Exercice 10 — Mini formulaire complet</h2>
+<h2>Exercice 10 — Formulaire complet</h2>
 
-<h3>Objectif</h3>
-Créer un formulaire avec validation.
+<p class="explication">
+
+Créer un formulaire avec validation et messages d'erreur.
+
+</p>
 
 <pre class="code-example">
+
+import { useForm } from "react-hook-form"
 
 function Contact(){
 
  const {
+
   register,
+
   handleSubmit,
+
   formState: { errors }
+
  } = useForm()
 
  function onSubmit(data){
+
   console.log(data)
+
  }
 
  return(
 
   &lt;form onSubmit={handleSubmit(onSubmit)}&gt;
 
+   // Champ nom obligatoire
    &lt;input {...register("name",{required:true})} /&gt;
 
+   // Message erreur
    {errors.name && &lt;p&gt;Nom requis&lt;/p&gt;}
 
+   // Champ email obligatoire
    &lt;input {...register("email",{required:true})} /&gt;
 
+   // Message erreur
    {errors.email && &lt;p&gt;Email requis&lt;/p&gt;}
 
+   // Bouton envoyer
    &lt;button&gt;Envoyer&lt;/button&gt;
 
   &lt;/form&gt;
@@ -411,7 +537,9 @@ function Contact(){
 
 </div>
 
+
 </main>
 
 </body>
+
 </html>
