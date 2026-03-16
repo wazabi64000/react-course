@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<title>React useContext - Store</title>
+<link rel="stylesheet" href="css/style.css">
+<script defer src="js/course.js"></script>
+</head>
+
+<body>
+
+<header>
+  <h1>React - useContext (Store)</h1>
+  <a href="index.html">← Retour au menu</a>
+</header>
+
+<main class="container">
+
+<p>
+Le hook <strong>useContext</strong> peut servir de store global pour gérer des données comme un stock de produits ou un panier dans React.
+</p>
+
+<!-- EXERCICE 1 -->
+<div class="exercise">
+<h2>Exercice 1 — Créer un contexte</h2>
+<p class="explication">Initialiser un contexte pour le store global.</p>
+<h3>Théorie</h3>
+<p>
+<code>createContext</code> permet de partager un state global accessible par tous les composants enfants.
+</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+// Création d'un contexte vide
+import { createContext } from "react";
+
+// StoreContext sera partagé entre composants
+const StoreContext = createContext(null);
+</pre>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+import { createContext } from "react"
+
+const StoreContext = createContext(null)
+</pre>
+</div>
+
+<!-- EXERCICE 2 -->
+<div class="exercise">
+<h2>Exercice 2 — Provider</h2>
+<p class="explication">Partager le store avec tous les composants enfants.</p>
+<h3>Théorie</h3>
+<p>
+Le <code>Provider</code> rend les données et fonctions accessibles dans l’arborescence des composants.
+</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+// Composant Provider pour le store
+function StoreProvider({ children }) {
+  // State global pour les produits
+  const [products, setProducts] = useState([]);
+
+  return (
+    <StoreContext.Provider value={{ products, setProducts }}>
+      {children} {/* rend les enfants avec accès au store */}
+    </StoreContext.Provider>
+  );
+}
+</pre>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+function StoreProvider({children}){
+ const [products,setProducts] = useState([])
+
+ return (
+   &lt;StoreContext.Provider value={{products,setProducts}}&gt;
+     {children}
+   &lt;/StoreContext.Provider&gt;
+ )
+}
+</pre>
+</div>
+
+<!-- EXERCICE 3 -->
+<div class="exercise">
+<h2>Exercice 3 — Ajouter un produit</h2>
+<p class="explication">Ajouter un produit dans le store global.</p>
+<h3>Théorie</h3>
+<p>
+<code>setProducts</code> permet de mettre à jour le tableau de produits en créant un nouveau tableau.
+</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+function addProduct(product) {
+  // ajoute un produit tout en conservant les existants
+  setProducts([...products, product]);
+}
+</pre>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+function addProduct(product){
+ setProducts([...products, product])
+}
+</pre>
+</div>
+
+<!-- EXERCICE 4 -->
+<div class="exercise">
+<h2>Exercice 4 — Supprimer un produit</h2>
+<p class="explication">Retirer un produit du store par son identifiant.</p>
+<h3>Théorie</h3>
+<p>
+<code>filter</code> permet de créer un nouveau tableau sans l’élément ciblé.
+</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+function removeProduct(id) {
+  // supprime le produit dont l'id correspond
+  setProducts(products.filter(p => p.id !== id));
+}
+</pre>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+function removeProduct(id){
+ setProducts(products.filter(p => p.id !== id))
+}
+</pre>
+</div>
+
+<!-- EXERCICE 5 -->
+<div class="exercise">
+<h2>Exercice 5 — Mettre à jour un produit</h2>
+<p class="explication">Modifier les informations d’un produit existant.</p>
+<h3>Théorie</h3>
+<p>
+<code>map</code> permet de remplacer un élément précis dans le tableau sans modifier les autres.
+</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+function updateProduct(updated) {
+  setProducts(products.map(p => p.id === updated.id ? updated : p));
+}
+</pre>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+function updateProduct(updated){
+ setProducts(products.map(p => p.id === updated.id ? updated : p))
+}
+</pre>
+</div>
+
+<!-- EXERCICE 6 -->
+<div class="exercise">
+<h2>Exercice 6 — Ajouter au panier</h2>
+<p class="explication">Gérer un panier séparé dans le store.</p>
+<h3>Théorie</h3>
+<p>
+Un state supplémentaire peut stocker le panier des produits.
+</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+// State pour le panier
+const [cart, setCart] = useState([]);
+
+function addToCart(product) {
+  setCart([...cart, product]); // ajoute le produit au panier
+}
+</pre>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+const [cart,setCart] = useState([])
+
+function addToCart(product){
+ setCart([...cart, product])
+}
+</pre>
+</div>
+
+<!-- EXERCICE 7 -->
+<div class="exercise">
+<h2>Exercice 7 — Calculer le total</h2>
+<p class="explication">Sommer les prix des produits dans le panier.</p>
+<h3>Théorie</h3>
+<p>
+<code>reduce</code> permet de cumuler les valeurs d’un tableau pour obtenir un total.
+</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+function getTotal() {
+  return cart.reduce((sum, p) => sum + p.price, 0);
+}
+</pre>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+function getTotal(){
+ return cart.reduce((sum,p) => sum + p.price, 0)
+}
+</pre>
+</div>
+
+<!-- EXERCICE 8 -->
+<div class="exercise">
+<h2>Exercice 8 — Filtrer les produits</h2>
+<p class="explication">Afficher seulement certains produits selon une catégorie.</p>
+<h3>Théorie</h3>
+<p>
+<code>filter</code> permet de sélectionner des éléments spécifiques dans le tableau.
+</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+function filterCategory(category) {
+  return products.filter(p => p.category === category);
+}
+</pre>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+function filterCategory(category){
+ return products.filter(p => p.category === category)
+}
+</pre>
+</div>
+
+<!-- EXERCICE 9 -->
+<div class="exercise">
+<h2>Exercice 9 — Persistance</h2>
+<p class="explication">Sauvegarder le store dans localStorage pour conserver les données.</p>
+<h3>Théorie</h3>
+<p>
+useEffect permet de synchroniser le state avec <code>localStorage</code> automatiquement.
+</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+useEffect(() => {
+  localStorage.setItem("products", JSON.stringify(products));
+}, [products]); // mise à jour à chaque changement
+</pre>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+useEffect(()=>{
+ localStorage.setItem("products", JSON.stringify(products))
+},[products])
+</pre>
+</div>
+
+<!-- EXERCICE 10 -->
+<div class="exercise">
+<h2>Exercice 10 — Mini Store</h2>
+<p class="explication">Créer une mini application avec ajout, suppression, mise à jour de produits et panier.</p>
+<h3>Théorie</h3>
+<p>
+useContext permet de centraliser toute la logique d’état global pour simplifier la gestion du store.
+</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+/* Exemple de structure de mini store */
+// StoreProvider.jsx
+// ProductList.jsx
+// Cart.jsx
+// AddProductForm.jsx
+</pre>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+/* StoreProvider.jsx */
+/* ProductList.jsx */
+/* Cart.jsx */
+/* AddProductForm.jsx */
+</pre>
+</div>
+
+</main>
+
+</body>
+</html>

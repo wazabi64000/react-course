@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<title>React useContext - Auth</title>
+<link rel="stylesheet" href="css/style.css">
+<script defer src="js/course.js"></script>
+</head>
+
+<body>
+
+<header>
+  <h1>React - useContext (Auth)</h1>
+  <a href="index.html">← Retour au menu</a>
+</header>
+
+<main class="container">
+
+<p>
+Le hook <strong>useContext</strong> permet de partager des données globales dans React.
+Ici, nous l’utilisons pour gérer un utilisateur authentifié dans toute l’application.
+</p>
+
+<!-- EXERCICE 1 -->
+<div class="exercise">
+<h2>Exercice 1 — Créer un contexte</h2>
+<p class="explication">Initialiser un contexte pour l'utilisateur global.</p>
+<h3>Théorie</h3>
+<p>
+<code>createContext</code> permet de créer un contexte accessible par tous les composants enfants.
+</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+// Création du contexte Auth
+import { createContext } from "react";
+
+// AuthContext pourra être partagé
+const AuthContext = createContext(null);
+</pre>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+import { createContext } from "react"
+
+const AuthContext = createContext(null)
+</pre>
+</div>
+
+<!-- EXERCICE 2 -->
+<div class="exercise">
+<h2>Exercice 2 — Provider</h2>
+<p class="explication">Partager les données utilisateur à tous les composants enfants.</p>
+<h3>Théorie</h3>
+<p>
+Le <code>Provider</code> rend les données accessibles dans l’arborescence React.
+</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+function AuthProvider({ children }) {
+  // State pour l'utilisateur
+  const [user, setUser] = useState(null);
+
+  return (
+    <AuthContext.Provider value={{ user, setUser }}>
+      {children} {/* rend les enfants avec accès au contexte */}
+    </AuthContext.Provider>
+  );
+}
+</pre>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+function AuthProvider({children}){
+ const [user,setUser] = useState(null)
+
+ return (
+   &lt;AuthContext.Provider value={{user,setUser}}&gt;
+     {children}
+   &lt;/AuthContext.Provider&gt;
+ )
+}
+</pre>
+</div>
+
+<!-- EXERCICE 3 -->
+<div class="exercise">
+<h2>Exercice 3 — Login</h2>
+<p class="explication">Mettre à jour l'utilisateur dans le contexte.</p>
+<h3>Théorie</h3>
+<p>
+La fonction <code>setUser</code> permet de stocker les informations de l’utilisateur après authentification.
+</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+function login(userData) {
+  // stocke les données de l'utilisateur
+  setUser(userData);
+}
+</pre>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+function login(userData){
+ setUser(userData)
+}
+</pre>
+</div>
+
+<!-- EXERCICE 4 -->
+<div class="exercise">
+<h2>Exercice 4 — Logout</h2>
+<p class="explication">Supprimer l’utilisateur du contexte.</p>
+<h3>Théorie</h3>
+<p>
+Réinitialiser le state <code>user</code> à <code>null</code> permet de déconnecter l’utilisateur.
+</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+function logout() {
+  // réinitialise l'utilisateur
+  setUser(null);
+}
+</pre>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+function logout(){
+ setUser(null)
+}
+</pre>
+</div>
+
+<!-- EXERCICE 5 -->
+<div class="exercise">
+<h2>Exercice 5 — Consommer le contexte</h2>
+<p class="explication">Récupérer l’utilisateur dans un composant enfant.</p>
+<h3>Théorie</h3>
+<p>
+<code>useContext</code> permet d’accéder aux données partagées par le Provider.
+</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+import { useContext } from "react";
+
+// récupération du user depuis AuthContext
+const { user } = useContext(AuthContext);
+
+<p>{user?.name}</p> {/* affiche le nom si l'utilisateur existe */}
+</pre>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+import { useContext } from "react"
+
+const { user } = useContext(AuthContext)
+
+&lt;p&gt;{user?.name}&lt;/p&gt;
+</pre>
+</div>
+
+<!-- EXERCICE 6 -->
+<div class="exercise">
+<h2>Exercice 6 — Hook custom</h2>
+<p class="explication">Créer un hook pour simplifier l’accès au contexte.</p>
+<h3>Théorie</h3>
+<p>
+Un custom hook encapsule <code>useContext</code> pour éviter de répéter le code.
+</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+function useAuth() {
+  // hook simplifié pour accéder à AuthContext
+  return useContext(AuthContext);
+}
+</pre>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+function useAuth(){
+ return useContext(AuthContext)
+}
+</pre>
+</div>
+
+<!-- EXERCICE 7 -->
+<div class="exercise">
+<h2>Exercice 7 — Route protégée</h2>
+<p class="explication">Afficher un composant uniquement si l’utilisateur est connecté.</p>
+<h3>Théorie</h3>
+<p>
+Vérifier le state <code>user</code> avant de rendre un composant.
+</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+function ProtectedRoute({ children }) {
+  const { user } = useAuth();
+  if (!user) return <p>Accès refusé</p>; // non connecté
+  return children; // rendu du composant si connecté
+}
+</pre>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+function ProtectedRoute({children}){
+ const {user} = useAuth()
+ if(!user) return &lt;p&gt;Accès refusé&lt;/p&gt;
+ return children
+}
+</pre>
+</div>
+
+<!-- EXERCICE 8 -->
+<div class="exercise">
+<h2>Exercice 8 — Token</h2>
+<p class="explication">Stocker un token JWT après login.</p>
+<h3>Théorie</h3>
+<p>
+Le token peut être conservé dans le state ou dans <code>localStorage</code>.
+</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+function login(userData, token) {
+  setUser({ ...userData, token });
+  localStorage.setItem("token", token); // persistance du token
+}
+</pre>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+function login(userData, token){
+ setUser({...userData, token})
+ localStorage.setItem("token", token)
+}
+</pre>
+</div>
+
+<!-- EXERCICE 9 -->
+<div class="exercise">
+<h2>Exercice 9 — Refresh session</h2>
+<p class="explication">Mettre à jour le token automatiquement.</p>
+<h3>Théorie</h3>
+<p>
+Un <code>useEffect</code> peut synchroniser le token lors d’un changement de user.
+</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+useEffect(() => {
+  // Appel API pour rafraîchir le token si nécessaire
+}, [user]);
+</pre>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+useEffect(()=>{
+ // Appel API refresh token
+},[user])
+</pre>
+</div>
+
+<!-- EXERCICE 10 -->
+<div class="exercise">
+<h2>Exercice 10 — Architecture Auth</h2>
+<p class="explication">Structurer le contexte et les composants pour une application complète.</p>
+<h3>Théorie</h3>
+<p>
+Séparer Provider, hooks et composants rend l’architecture plus claire et maintenable.
+</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+/* Exemple de structure Auth */
+// AuthProvider.jsx
+// useAuth.js
+// LoginForm.jsx
+// ProtectedRoute.jsx
+</pre>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+/* AuthProvider.jsx */
+/* useAuth.js */
+/* LoginForm.jsx */
+/* ProtectedRoute.jsx */
+</pre>
+</div>
+
+</main>
+
+</body>
+</html>

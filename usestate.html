@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<title>React useState</title>
+<link rel="stylesheet" href="css/style.css">
+<script defer src="js/course.js"></script>
+</head>
+
+<body>
+
+<header>
+  <h1>React - useState</h1>
+  <a href="index.html">← Retour au menu</a>
+</header>
+
+<main class="container">
+
+<p>
+Le hook <strong>useState</strong> permet de gérer l'état d'un composant React.
+Il permet de stocker des données et de mettre à jour l'interface lorsqu'elles changent.
+</p>
+
+<!-- EXERCICE 1 -->
+<div class="exercise">
+<h2>Exercice 1 — State simple</h2>
+<p class="explication">Créer une variable d'état.</p>
+<h3>Théorie</h3>
+<p>useState retourne deux éléments : la valeur et une fonction pour la modifier.</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+// Déclaration d'un state count initialisé à 0
+const [count, setCount] = useState(0);
+
+// count contient la valeur actuelle
+// setCount permet de modifier count
+</pre>
+
+<h3>Explication du code</h3>
+<p>
+- <code>count</code> est la valeur du state.<br>
+- <code>setCount</code> est la fonction pour mettre à jour cette valeur.
+</p>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+const [count, setCount] = useState(0)
+</pre>
+</div>
+
+<!-- EXERCICE 2 -->
+<div class="exercise">
+<h2>Exercice 2 — Afficher le state</h2>
+<p class="explication">Afficher la valeur d'un state dans le JSX.</p>
+<h3>Théorie</h3>
+<p>La valeur du state peut être affichée dans les accolades JSX.</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+// Affichage de la valeur count dans un paragraphe
+&lt;p&gt;{count}&lt;/p&gt;
+</pre>
+
+<h3>Explication du code</h3>
+<p>
+- Les accolades permettent d'insérer la valeur du state dans le JSX.<br>
+- Chaque mise à jour de count déclenche un re-render automatique.
+</p>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+&lt;p&gt;{count}&lt;/p&gt;
+</pre>
+</div>
+
+<!-- EXERCICE 3 -->
+<div class="exercise">
+<h2>Exercice 3 — Incrémenter un compteur</h2>
+<p class="explication">Modifier un state avec un bouton.</p>
+<h3>Théorie</h3>
+<p>La fonction setState permet de modifier la valeur.</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+// Bouton qui ajoute 1 au compteur
+&lt;button onClick={() =&gt; setCount(count + 1)}&gt;
+  Ajouter
+&lt;/button&gt;
+</pre>
+
+<h3>Explication du code</h3>
+<p>
+- L'événement onClick déclenche une fonction fléchée.<br>
+- La fonction appelle <code>setCount</code> pour incrémenter le state.
+</p>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+&lt;button onClick={() => setCount(count + 1)}&gt;
+Ajouter
+&lt;/button&gt;
+</pre>
+</div>
+
+<!-- EXERCICE 4 -->
+<div class="exercise">
+<h2>Exercice 4 — Décrémenter</h2>
+<p class="explication">Réduire la valeur d'un state.</p>
+<h3>Théorie</h3>
+<p>Le state peut être modifié avec n'importe quelle opération JavaScript.</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+// Bouton qui retire 1 au compteur
+&lt;button onClick={() =&gt; setCount(count - 1)}&gt;
+  Retirer
+&lt;/button&gt;
+</pre>
+
+<h3>Explication du code</h3>
+<p>
+- On utilise la même logique que pour l'incrémentation.<br>
+- L'opération <code>count - 1</code> met à jour le state.
+</p>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+&lt;button onClick={() => setCount(count - 1)}&gt;
+Retirer
+&lt;/button&gt;
+</pre>
+</div>
+
+<!-- EXERCICE 5 -->
+<div class="exercise">
+<h2>Exercice 5 — Reset</h2>
+<p class="explication">Remettre le state à sa valeur initiale.</p>
+<h3>Théorie</h3>
+<p>La fonction setState peut réinitialiser la valeur.</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+// Bouton qui réinitialise count
+&lt;button onClick={() =&gt; setCount(0)}&gt;
+  Reset
+&lt;/button&gt;
+</pre>
+
+<h3>Explication du code</h3>
+<p>
+- Appelle <code>setCount</code> avec la valeur initiale.<br>
+- Permet de remettre le compteur à zéro facilement.
+</p>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+&lt;button onClick={() => setCount(0)}&gt;
+Reset
+&lt;/button&gt;
+</pre>
+</div>
+
+<!-- EXERCICE 6 -->
+<div class="exercise">
+<h2>Exercice 6 — Input contrôlé</h2>
+<p class="explication">Synchroniser un input avec un state.</p>
+<h3>Théorie</h3>
+<p>Un input contrôlé utilise value et onChange pour refléter le state.</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+// Déclaration du state
+const [text, setText] = useState("");
+
+// Input contrôlé
+&lt;input
+  value={text}              // valeur liée au state
+  onChange={(e) =&gt; setText(e.target.value)}  // met à jour le state
+/&gt;
+</pre>
+
+<h3>Explication du code</h3>
+<p>
+- La valeur de l'input est toujours synchronisée avec <code>text</code>.<br>
+- OnChange capture les saisies et met à jour le state.
+</p>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+const [text,setText] = useState("")
+
+&lt;input
+value={text}
+onChange={(e)=>setText(e.target.value)}
+/&gt;
+</pre>
+</div>
+
+<!-- EXERCICE 7 -->
+<div class="exercise">
+<h2>Exercice 7 — Toggle</h2>
+<p class="explication">Basculer entre deux états.</p>
+<h3>Théorie</h3>
+<p>Un state booléen permet de gérer un affichage conditionnel.</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+// Déclaration du state booléen
+const [visible, setVisible] = useState(false);
+
+// Bouton pour changer l'état
+&lt;button onClick={() =&gt; setVisible(!visible)}&gt;
+  Toggle
+&lt;/button&gt;
+
+// Affichage conditionnel
+{visible &amp;&amp; &lt;p&gt;Bonjour&lt;/p&gt;}
+</pre>
+
+<h3>Explication du code</h3>
+<p>
+- <code>!visible</code> inverse la valeur actuelle.<br>
+- Le texte "Bonjour" n'est affiché que si visible est vrai.
+</p>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+const [visible,setVisible] = useState(false)
+
+&lt;button onClick={() => setVisible(!visible)}&gt;
+Toggle
+&lt;/button&gt;
+
+{visible && &lt;p&gt;Bonjour&lt;/p&gt;}
+</pre>
+</div>
+
+<!-- EXERCICE 8 -->
+<div class="exercise">
+<h2>Exercice 8 — State objet</h2>
+<p class="explication">Stocker un objet dans un state.</p>
+<h3>Théorie</h3>
+<p>Un state peut contenir un objet JavaScript.</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+// Déclaration d'un state user
+const [user, setUser] = useState({
+  name: "Lucas",
+  age: 25
+});
+
+// Affichage des propriétés
+&lt;p&gt;{user.name} - {user.age}&lt;/p&gt;
+</pre>
+
+<h3>Explication du code</h3>
+<p>
+- <code>user</code> est un objet stocké dans le state.<br>
+- On peut modifier ses propriétés avec <code>setUser</code>.
+</p>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+const [user,setUser] = useState({
+ name:"Lucas",
+ age:25
+})
+</pre>
+</div>
+
+<!-- EXERCICE 9 -->
+<div class="exercise">
+<h2>Exercice 9 — Tableau</h2>
+<p class="explication">Stocker une liste dans un state.</p>
+<h3>Théorie</h3>
+<p>Un tableau peut être utilisé pour afficher une liste dynamique.</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+// Déclaration d'un state tableau
+const [tasks, setTasks] = useState([]);
+
+// Ajouter une tâche
+setTasks([...tasks, "Nouvelle tâche"]);
+</pre>
+
+<h3>Explication du code</h3>
+<p>
+- L'opérateur spread <code>...</code> permet de conserver les anciennes valeurs.<br>
+- On ajoute une nouvelle tâche sans écraser l'ancien tableau.
+</p>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+const [tasks,setTasks] = useState([])
+
+setTasks([...tasks,"Nouvelle tâche"])
+</pre>
+</div>
+
+<!-- EXERCICE 10 -->
+<div class="exercise">
+<h2>Exercice 10 — Mini Todo List</h2>
+<p class="explication">Créer une petite application avec useState.</p>
+<h3>Théorie</h3>
+<p>useState peut gérer une logique complète d'application simple.</p>
+
+<h3>Code Exemple</h3>
+<pre class="code-example">
+// States pour liste et nouvel input
+const [tasks, setTasks] = useState([]);
+const [task, setTask] = useState("");
+
+// Fonction pour ajouter une tâche
+function addTask() {
+  setTasks([...tasks, task]);  // Ajoute la nouvelle tâche
+  setTask("");                  // Reset du champ texte
+}
+</pre>
+
+<h3>Explication du code</h3>
+<p>
+- <code>tasks</code> contient toutes les tâches.<br>
+- <code>task</code> contient le texte saisi.<br>
+- addTask ajoute la tâche et réinitialise l'input.
+</p>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+const [tasks,setTasks] = useState([])
+const [task,setTask] = useState("")
+
+function addTask(){
+ setTasks([...tasks,task])
+ setTask("")
+}
+</pre>
+</div>
+
+</main>
+
+</body>
+</html>

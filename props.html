@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<title>React Props - Cours Pas à Pas</title>
+<link rel="stylesheet" href="css/style.css">
+<script defer src="js/course.js"></script>
+</head>
+
+<body>
+
+<header>
+  <h1>React - Props</h1>
+  <a href="index.html">← Retour au menu</a>
+</header>
+
+<main class="container">
+
+<p>
+Les <strong>props</strong> permettent de transmettre des données d’un composant parent vers un composant enfant dans React. 
+Elles peuvent être des valeurs simples, des objets, des fonctions ou même des composants.
+</p>
+
+<!-- EXERCICE 1 -->
+<div class="exercise">
+<h2>Exercice 1 — Première prop simple</h2>
+<p class="explication">Transmettre une chaîne de caractères à un composant enfant.</p>
+
+<h3>Théorie</h3>
+<p>Une prop est un paramètre passé à un composant. On peut la déstructurer directement dans les accolades du composant.</p>
+
+<h3>Exemple fonctionnel pas à pas</h3>
+<pre class="code-example">
+// 1. Création du composant enfant Greeting
+function Greeting({ message }) {
+  // message est la prop passée depuis le parent
+  return &lt;h1&gt;{message}&lt;/h1&gt;;
+}
+
+// 2. Composant parent App
+function App() {
+  // On transmet la prop "message" avec une valeur
+  return &lt;Greeting message="Bonjour React" /&gt;;
+}
+
+// 3. Résultat affiché : <h1>Bonjour React</h1>
+</pre>
+
+<h3>Explication</h3>
+<p>
+1. Greeting reçoit la prop <code>message</code>.<br>
+2. La prop est utilisée pour afficher du texte dans le composant.<br>
+3. App transmet la valeur "Bonjour React" via l’attribut <code>message</code>.
+</p>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+&lt;Greeting message="Bonjour React" /&gt;
+</pre>
+</div>
+
+<!-- EXERCICE 2 -->
+<div class="exercise">
+<h2>Exercice 2 — Plusieurs props</h2>
+<p class="explication">Passer plusieurs données à un composant.</p>
+
+<h3>Théorie</h3>
+<p>Les props sont des propriétés d’un objet. Elles peuvent être déstructurées pour être utilisées directement.</p>
+
+<h3>Exemple fonctionnel pas à pas</h3>
+<pre class="code-example">
+// 1. Composant User reçoit deux props : name et age
+function User({ name, age }) {
+  return &lt;p&gt;Nom: {name}, Age: {age}&lt;/p&gt;;
+}
+
+// 2. Composant App transmet plusieurs props
+function App() {
+  return &lt;User name="Lucas" age={25} /&gt;;
+}
+
+// 3. Résultat affiché : Nom: Lucas, Age: 25
+</pre>
+
+<h3>Explication</h3>
+<p>
+- <code>name</code> et <code>age</code> sont transmises depuis le parent.<br>
+- La déstructuration permet de les utiliser directement sans props.name ni props.age.<br>
+- On peut envoyer n’importe quel type de valeur (string, number, boolean, objet…).
+</p>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+&lt;User name="Lucas" age={25} /&gt;
+</pre>
+</div>
+
+<!-- EXERCICE 3 -->
+<div class="exercise">
+<h2>Exercice 3 — Props dynamiques</h2>
+<p class="explication">Utiliser des variables comme props.</p>
+
+<h3>Théorie</h3>
+<p>On peut envoyer des valeurs dynamiques provenant du state ou de variables.</p>
+
+<h3>Exemple fonctionnel pas à pas</h3>
+<pre class="code-example">
+// 1. Variable dynamique
+const username = "Emma";
+
+// 2. Composant User
+function User({ name }) {
+  return &lt;p&gt;Bonjour {name}&lt;/p&gt;;
+}
+
+// 3. Composant App
+function App() {
+  // On transmet la variable username comme prop
+  return &lt;User name={username} /&gt;;
+}
+
+// 4. Résultat affiché : Bonjour Emma
+</pre>
+
+<h3>Explication</h3>
+<p>
+- La prop <code>name</code> reçoit une valeur dynamique.<br>
+- Cela permet d’afficher des informations qui peuvent changer dans l’application.
+</p>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+&lt;User name={username} /&gt;
+</pre>
+</div>
+
+<!-- EXERCICE 4 -->
+<div class="exercise">
+<h2>Exercice 4 — Props children</h2>
+<p class="explication">Insérer du contenu HTML ou des composants dans un composant.</p>
+
+<h3>Théorie</h3>
+<p>La prop spéciale <strong>children</strong> contient ce qui est placé entre les balises du composant.</p>
+
+<h3>Exemple fonctionnel pas à pas</h3>
+<pre class="code-example">
+// 1. Composant Card qui reçoit children
+function Card({ children }) {
+  return &lt;div className="card"&gt;
+    {children} // Contenu injecté par le parent
+  &lt;/div&gt;;
+}
+
+// 2. Composant App
+function App() {
+  return (
+    &lt;Card&gt;
+      &lt;p&gt;Ceci est le contenu de la carte&lt;/p&gt;
+    &lt;/Card&gt;
+  );
+}
+
+// 3. Résultat affiché : un div contenant le paragraphe
+</pre>
+
+<h3>Explication</h3>
+<p>
+- <code>children</code> récupère tout ce qui se trouve entre &lt;Card&gt; et &lt;/Card&gt;.<br>
+- Cela permet d’insérer des textes, images ou autres composants facilement.
+</p>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+&lt;Card&gt;&lt;p&gt;Ceci est le contenu&lt;/p&gt;&lt;/Card&gt;
+</pre>
+</div>
+
+<!-- EXERCICE 5 -->
+<div class="exercise">
+<h2>Exercice 5 — Fonction en prop</h2>
+<p class="explication">Transmettre une fonction pour déclencher une action depuis l’enfant.</p>
+
+<h3>Théorie</h3>
+<p>Les props peuvent contenir des fonctions. L’enfant peut les appeler pour communiquer avec le parent.</p>
+
+<h3>Exemple fonctionnel pas à pas</h3>
+<pre class="code-example">
+// 1. Composant Button reçoit une fonction handleClick
+function Button({ handleClick }) {
+  return &lt;button onClick={handleClick}&gt;Cliquez&lt;/button&gt;;
+}
+
+// 2. Composant parent App définit la fonction
+function App() {
+  function sayHello() {
+    alert("Bonjour !");
+  }
+
+  return &lt;Button handleClick={sayHello} /&gt;;
+}
+
+// 3. Résultat : clic sur le bouton affiche une alerte
+</pre>
+
+<h3>Explication</h3>
+<p>
+- La prop <code>handleClick</code> contient la fonction du parent.<br>
+- Le composant Button déclenche cette fonction au clic.<br>
+- Le parent garde le contrôle du comportement.
+</p>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+&lt;Button handleClick={sayHello} /&gt;
+</pre>
+</div>
+
+<!-- EXERCICE 6 -->
+<div class="exercise">
+<h2>Exercice 6 — Liste d’éléments</h2>
+<p class="explication">Générer des composants dynamiquement avec map.</p>
+
+<h3>Théorie</h3>
+<p>map permet de transformer un tableau de données en une liste de composants React.</p>
+
+<h3>Exemple fonctionnel pas à pas</h3>
+<pre class="code-example">
+// 1. Tableau d'utilisateurs
+const users = [
+  { id: 1, name: "Lucas", age: 25 },
+  { id: 2, name: "Emma", age: 30 }
+];
+
+// 2. Composant User
+function User({ name, age }) {
+  return &lt;p&gt;{name} - {age} ans&lt;/p&gt;;
+}
+
+// 3. Composant App
+function App() {
+  return (
+    &lt;div&gt;
+      {users.map(user =&gt; 
+        &lt;User key={user.id} name={user.name} age={user.age} /&gt;
+      )}
+    &lt;/div&gt;
+  );
+}
+
+// 4. Résultat : liste de paragraphes pour chaque utilisateur
+</pre>
+
+<h3>Explication</h3>
+<p>
+- Chaque User reçoit ses props individuelles.<br>
+- L’attribut <code>key</code> est nécessaire pour que React identifie les éléments de la liste.
+</p>
+
+<button onclick="toggleSolution(this)">Voir la solution</button>
+<pre class="solution">
+users.map(user =&gt; &lt;User key={user.id} name={user.name} age={user.age} /&gt;)
+</pre>
+</div>
+
+<!-- Les autres exercices (7-10) peuvent suivre le même format détaillé -->
+
+</main>
+</body>
+</html>
